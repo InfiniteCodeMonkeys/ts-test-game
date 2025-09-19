@@ -5,6 +5,13 @@ export default class NumberGuessingGame {
   private attempts: number;
   private difficulty: string;
 
+  constructor(difficulty: string = "moderate") {
+    const maxNumber = this.getMaxNumber();
+    this.targetNumber = Math.floor(Math.random() * maxNumber);
+    this.attempts = 0;
+    this.difficulty = difficulty;
+  }
+
   private getMaxNumber(): number {
     switch (this.difficulty) {
       case "easy":
@@ -14,13 +21,6 @@ export default class NumberGuessingGame {
       default:
         return 100;
     }
-  }
-
-  constructor(difficulty: string = "moderate") {
-    const maxNumber = this.getMaxNumber();
-    this.targetNumber = Math.floor(Math.random() * maxNumber);
-    this.attempts = 0;
-    this.difficulty = difficulty;
   }
 
   private getUserGuess(): number | null {
@@ -59,6 +59,7 @@ export default class NumberGuessingGame {
           `🎉 Congratulations! You've guessed the number ${this.targetNumber} in ${this.attempts} attempts!`
         );
         this.targetNumber = Math.floor(Math.random() * maxNumber);
+        this.attempts = 0;
       } else if (guess < this.targetNumber) {
         console.log("⬆️ Too low! Try again.");
       } else {
